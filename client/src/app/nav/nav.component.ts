@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
@@ -11,14 +12,14 @@ import { AccountService } from '../_services/account.service';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
-  model: any = {}
+  model: any = {};
 
   constructor(public accountService: AccountService, 
     private router: Router, 
-    private toastr: ToastrService) { }
+    private toastr: ToastrService,
+    private fb: FormBuilder,) { }
 
   ngOnInit(): void {
-    
   }
 
   login() {

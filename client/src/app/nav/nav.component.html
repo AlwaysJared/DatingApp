@@ -1,6 +1,14 @@
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
   <div class="container">
-    <a class="navbar-brand" routerLink="/">Dating App</a>
+
+    <!-- crude ternarry Logo route, changes depending on if there is a currently logged in user. 
+      Prevents the user from landning back on the regitster call to action page-->
+    <ng-container *ngIf="!(accountService.currentUser$ | async)">
+      <a class="navbar-brand" routerLink="/">Dating App</a>
+    </ng-container>
+    <ng-container *ngIf="(accountService.currentUser$ | async)">
+      <a class="navbar-brand" routerLink="/members">Dating App</a>
+    </ng-container>
 
     <ul class="navbar-nav mr-auto" >
       <ng-container *ngIf="accountService.currentUser$ | async">
@@ -34,7 +42,7 @@
     <!-- idea for routerlink to current user profile in nav picture -->
     <!-- routerLink='/members/{{user.username}}' -->
     <div class="dropdown" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
-      <img src="{{user.photoUrl || './assets/user.png'}}" alt="{{user.username}}">
+      <img src="{{user.photoUrl || './assets/user.png'}}" alt="{{user.username}}" >
       <a class="dropdown-toggle text-light ml-2" dropdownToggle>Welcome {{user.knownAs | titlecase}}</a>
       <div class="dropdown-menu mt-3" *dropdownMenu>
         <a routerLink='/member/edit' class="dropdown-item">Edit Profile</a>
@@ -64,7 +72,7 @@
         type="password"
         placeholder="Password"
       />
-      <button class="btn btn-outline-success" type="submit">Login</button>
+      <button [disabled]='!model.username?.length || !model.password?.length' class="btn btn-outline-success" type="submit">Login</button>
     </form>
   </div>
 </nav>
