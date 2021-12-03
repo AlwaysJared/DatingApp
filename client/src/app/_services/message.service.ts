@@ -45,7 +45,7 @@ export class MessageService {
       if (group.connections.some(x => x.username === otherUsername)) {
         this.messageThread$.pipe(take(1)).subscribe(messages => {
           messages.forEach(message => {
-            if (!message.dateRead || message.dateRead != null) {
+            if (!message.dateRead) {
               message.dateRead = new Date(Date.now())
             }
           })
