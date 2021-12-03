@@ -18,7 +18,7 @@ namespace API.Data.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "5.0.8");
 
-            modelBuilder.Entity("API.Enitities.AppUser", b =>
+            modelBuilder.Entity("API.Entities.AppUser", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -68,7 +68,7 @@ namespace API.Data.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("API.Enitities.Photo", b =>
+            modelBuilder.Entity("API.Entities.Photo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -93,7 +93,7 @@ namespace API.Data.Migrations
                     b.ToTable("Photos");
                 });
 
-            modelBuilder.Entity("API.Enitities.UserLike", b =>
+            modelBuilder.Entity("API.Entities.UserLike", b =>
                 {
                     b.Property<int>("SourceUserId")
                         .HasColumnType("INTEGER");
@@ -108,9 +108,9 @@ namespace API.Data.Migrations
                     b.ToTable("Likes");
                 });
 
-            modelBuilder.Entity("API.Enitities.Photo", b =>
+            modelBuilder.Entity("API.Entities.Photo", b =>
                 {
-                    b.HasOne("API.Enitities.AppUser", "AppUser")
+                    b.HasOne("API.Entities.AppUser", "AppUser")
                         .WithMany("Photos")
                         .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -119,15 +119,15 @@ namespace API.Data.Migrations
                     b.Navigation("AppUser");
                 });
 
-            modelBuilder.Entity("API.Enitities.UserLike", b =>
+            modelBuilder.Entity("API.Entities.UserLike", b =>
                 {
-                    b.HasOne("API.Enitities.AppUser", "LikedUser")
+                    b.HasOne("API.Entities.AppUser", "LikedUser")
                         .WithMany("LikedByUsers")
                         .HasForeignKey("LikedUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("API.Enitities.AppUser", "SourceUser")
+                    b.HasOne("API.Entities.AppUser", "SourceUser")
                         .WithMany("LikedUsers")
                         .HasForeignKey("SourceUserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -138,7 +138,7 @@ namespace API.Data.Migrations
                     b.Navigation("SourceUser");
                 });
 
-            modelBuilder.Entity("API.Enitities.AppUser", b =>
+            modelBuilder.Entity("API.Entities.AppUser", b =>
                 {
                     b.Navigation("LikedByUsers");
 

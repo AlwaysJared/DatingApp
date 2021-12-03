@@ -1,7 +1,7 @@
 using System;
 using Microsoft.AspNetCore.Identity;
 
-namespace API.Enitities
+namespace API.Entities
 {
     public class AppUserRole : IdentityUserRole<int>
     {

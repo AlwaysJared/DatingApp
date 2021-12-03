@@ -1,6 +1,6 @@
 using System;
 
-namespace API.Enitities
+namespace API.Entities
 {
     public class Message
     {

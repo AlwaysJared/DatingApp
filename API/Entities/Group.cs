@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace API.Enitities
+namespace API.Entities
 {
     public class Group
     {

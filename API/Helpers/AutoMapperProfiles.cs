@@ -1,6 +1,6 @@
 using System.Linq;
 using API.DTOs;
-using API.Enitities;
+using API.Entities;
 using AutoMapper;
 using API.Extensions;
 using System;

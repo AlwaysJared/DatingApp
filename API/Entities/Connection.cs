@@ -1,4 +1,4 @@
-namespace API.Enitities
+namespace API.Entities
 {
     public class Connection
     {

@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using API.Data;
 using API.DTOs;
-using API.Enitities;
+using API.Entities;
 using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;

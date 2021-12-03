@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using API.Enitities;
+using API.Entities;
 
 namespace API.Interfaces
 {
