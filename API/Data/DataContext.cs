@@ -22,6 +22,7 @@ namespace API.Data
         public DbSet<Message> Messages { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<Connection> Connections { get; set; }
+        public DbSet<Photo> Photos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -41,6 +42,13 @@ namespace API.Data
 
             builder.Entity<UserLike>()
                 .HasKey(k => new { k.SourceUserId, k.LikedUserId });
+
+            // builder.Entity<Photo>()
+            //     .HasOne(p => p.AppUser)
+            //     .WithMany(u => u.Photos)
+            //     .HasForeignKey(p => p.AppUserId);
+
+            builder.Entity<Photo>().HasQueryFilter(p => p.isApproved);
 
             builder.Entity<UserLike>()
                 .HasOne(s => s.SourceUser)

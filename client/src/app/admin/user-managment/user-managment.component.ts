@@ -20,7 +20,7 @@ export class UserManagmentComponent implements OnInit {
   }
 
   getUsersWithRoles() {
-    this.adminService.getUSersWithRoles().subscribe(users => {
+    this.adminService.getUsersWithRoles().subscribe(users => {
       this.users = users;
     })
   }

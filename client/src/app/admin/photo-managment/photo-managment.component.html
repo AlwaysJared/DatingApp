@@ -1,1 +1,41 @@
-<p>photo-managment works!</p>
+<div class="row">
+  <table class="table">
+    <tr>
+      <th style="width: 30%">Photo</th>
+      <th style="width: 40%">User</th>
+      <th style="width: 30%"></th>
+    </tr>
+    <tr *ngFor="let photo of photos">
+      <td>
+        <img
+          src="{{ photo.url }}"
+          alt="{{ photo.url }}"
+          class="img-thumbnail p-1"
+        />
+      </td>
+      <td><h5 class="username-link" routerLink="/members/{{photo.username}}">{{ photo.username | titlecase}}</h5></td>
+      <td>
+        <button class="btn btn-success mr-3" (click)="approvePhoto(photo.id)">
+          Approve
+        </button>
+        <button class="btn btn-danger" (click)="rejectPhoto(photo.id)">
+          Reject
+        </button>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="d-flex justify-content-center" *ngIf="pagination && !loading && photos?.length !== 0">
+    <pagination
+      [boundaryLinks]="true"
+      [totalItems]="pagination.totalItems"
+      [itemsPerPage]="pagination.itemsPerPage"
+      [(ngModel)]="pagination.currentPage"
+      (pageChanged)="pageChanged($event)"
+      previousText="&lsaquo;"
+      nextText="&rsaquo;"
+      firstText="&laquo;"
+      lastText="&raquo;"
+    >
+    </pagination>

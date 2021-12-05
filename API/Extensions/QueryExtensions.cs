@@ -21,5 +21,18 @@ namespace API.Extensions
  
             return query;
         }
+
+        // public static IQueryable<Photo> ApprovePhoto(this IQueryable<Photo> query, int id)
+        // {
+        //     var photoforApproval = query.Where(p => !p.isApproved && p.Id == id).SingleOrDefault();
+ 
+        //     if (photoforApproval != null)
+        //     {
+        //         photoforApproval.isApproved = true;
+               
+        //     }
+ 
+        //     return query;
+        // }
     }
 }
