@@ -3,16 +3,16 @@
   <hr />
 
   <div class="form-group">
-    <label class="control-label" style="margin-right: 10px">I am a:</label>
-    <label class="radio-inline">
-      <input type="radio" value="male" formControlName="gender" /> Male
+    <label style="margin-right: 10px">I am a:</label>
+    <label class="form-check-label">
+      <input class="form-check-input" type="radio" value="male" formControlName="gender" /> Male
     </label>
-    <label class="radio-inline">
+    <label class="form-check-label">
       <input
         type="radio"
         value="female"
         formControlName="gender"
-        class="ml-3"
+        class="form-check-input ms-3"
       />
       Female
     </label>
@@ -60,8 +60,8 @@
     </ul>
   </div>
   <div class="form-group text-center">
-    <button [disabled]='!registerForm.valid' class="btn btn-success mr-2" type="submit">Register</button>
-    <button class="btn btn-default mr-2" (click)="cancel()" type="button">
+    <button [disabled]='!registerForm.valid' class="btn btn-success me-2" type="submit">Register</button>
+    <button class="btn btn-default me-2" (click)="cancel()" type="button">
       Cancel
     </button>
   </div>

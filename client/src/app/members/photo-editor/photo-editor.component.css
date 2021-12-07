@@ -21,11 +21,16 @@ input[type=file]{
     color: transparent;
 }
 
+.img-container{
+    margin-bottom: -45px;
+}
+
 /* Centered text */
 .centered {
-    position: absolute;
+    position: relative;
     color: red;
-    top: 30%;
+    top: -35%;
     left: 50%;
     transform: translate(-50%, -50%);
+    margin-bottom: 0 !important;
   }
