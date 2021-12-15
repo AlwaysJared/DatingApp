@@ -40,6 +40,14 @@ namespace API.Data
                 users = likes.Select(like => like.SourceUser);
             }
 
+            if (likesParams.Predicate == "mutual")
+            {
+                likes = likes.Where(like => like.LikedUserId == likesParams.UserId
+                    || like.SourceUserId == likesParams.UserId);
+                users = likes.Select(like => like.SourceUser);
+                users = users.Where(u => u.Id != likesParams.UserId);
+            }
+
             var likedUsers = users.Select(user => new LikeDto
             {
                 Username = user.UserName,
@@ -50,7 +58,7 @@ namespace API.Data
                 Id = user.Id
             });
 
-            return await PagedList<LikeDto>.CreateAsync(likedUsers, 
+            return await PagedList<LikeDto>.CreateAsync(likedUsers,
                 likesParams.PageNumber, likesParams.PageSize);
         }
 

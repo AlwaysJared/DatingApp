@@ -51,6 +51,32 @@ namespace API.Controllers
             return BadRequest("Failed to like user");
         }
 
+        [HttpPost("unlike/{username}")]
+        public async Task<ActionResult> RemoveLike(string username)
+        {
+            var sourceUserId = User.GetUserId();
+            var likedUser = await _unitOfWork.UserRepository.GetUserByUsernameAsync(username);
+            var sourceUser = await _unitOfWork.LikesRepository.GetUserWithLikes(sourceUserId);
+
+            if (likedUser == null)
+                return NotFound();
+
+            if (sourceUser.UserName == username)
+                return BadRequest("You cannot unlike yourself");
+
+            var userLike = await _unitOfWork.LikesRepository.GetUserLike(sourceUserId, likedUser.Id);
+
+            if (userLike == null)
+                return BadRequest("You do not currently like this user");
+
+            sourceUser.LikedUsers.Remove(userLike);
+
+            if (await _unitOfWork.Complete())
+                return Ok();
+
+            return BadRequest("Failed to unlike user");
+        }
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<LikeDto>>> GetUserLikes([FromQuery] LikesParams likesParams)
         {
