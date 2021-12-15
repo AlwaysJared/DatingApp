@@ -24,4 +24,10 @@ export class MemberCardComponent implements OnInit {
       this.toastr.success('You have liked ' + member.knownAs);
     })
   }
+
+  removeLike(member: Member){
+    this.memberService.removeLike(member.username).subscribe(() => {
+      this.toastr.error('You have unliked ' + member.knownAs);
+    })
+  }
 }

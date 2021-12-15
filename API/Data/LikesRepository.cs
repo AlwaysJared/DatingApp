@@ -26,7 +26,9 @@ namespace API.Data
         public async Task<PagedList<LikeDto>> GetUserLikes(LikesParams likesParams)
         {
             var users = _context.Users.OrderBy(u => u.UserName).AsQueryable();
+            var users2 = _context.Users.OrderBy(u => u.UserName).AsQueryable();
             var likes = _context.Likes.AsQueryable();
+            var likes2 = _context.Likes.AsQueryable();
 
             if (likesParams.Predicate == "liked")
             {
@@ -42,10 +44,12 @@ namespace API.Data
 
             if (likesParams.Predicate == "mutual")
             {
-                likes = likes.Where(like => like.LikedUserId == likesParams.UserId
-                    || like.SourceUserId == likesParams.UserId);
-                users = likes.Select(like => like.SourceUser);
-                users = users.Where(u => u.Id != likesParams.UserId);
+                likes = likes.Where(like => like.SourceUserId == likesParams.UserId);
+                likes2 = likes2.Where(like => like.LikedUserId == likesParams.UserId);
+                users = likes.Select(like => like.LikedUser);
+                users2 = likes2.Select(like => like.SourceUser);
+                users = users.Join(users2, u1 => u1, u2 => u2, (u1,u2) => u1);
+                // users = users.Where(u => u.Id != likesParams.UserId);
             }
 
             var likedUsers = users.Select(user => new LikeDto
