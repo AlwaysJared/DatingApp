@@ -32,6 +32,7 @@ namespace API.Data
                 .HasMany(ur => ur.UserRoles)
                 .WithOne(u => u.User)
                 .HasForeignKey(ur => ur.UserId)
+                .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired();
 
             builder.Entity<AppRole>()
@@ -62,15 +63,19 @@ namespace API.Data
                 .HasForeignKey(s => s.LikedUserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            // changed deletion behavior set up in course ("restrict") to "cascade" to allow for account deletion of users
+            // This does not seem to affect the recipient of a message. If the sender deletes the message, recipient can still see
+            //  MAY NEED FURTHER TESTING TO ENSURE THIS BEHAVIOR DOES NOT CAUSE ANY DB INTEGRITY ISSUES 
+
             builder.Entity<Message>()
                 .HasOne(u => u.Recipient)
                 .WithMany(m => m.MessagesReceived)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Message>()
                 .HasOne(u => u.Sender)
                 .WithMany(m => m.MessagesSent)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.ApplyUtcDateTimeConverter();
         }

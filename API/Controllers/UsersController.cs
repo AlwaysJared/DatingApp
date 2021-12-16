@@ -154,5 +154,31 @@ namespace API.Controllers
 
             return BadRequest("Failed to delete photo");
         }
+
+        [HttpDelete("delete-account/{username}")]
+        public async Task<ActionResult> DeleteUser(string username)
+        {
+            var currUser = await _unitOfWork.UserRepository.GetUserByUsernameAsync(User.GetUsername());
+            var delUser = await _unitOfWork.UserRepository.GetUserByUsernameAsync(username);
+            
+            if(delUser == null)
+            {
+                return NotFound();
+            }
+
+            if(delUser.Id != currUser.Id)
+            {
+                return Unauthorized("Cannot delete another user's account");
+            }
+
+            _unitOfWork.UserRepository.DeleteUser(delUser);
+
+            if(await _unitOfWork.Complete())
+            {
+                return Ok();
+            }
+            
+            return BadRequest("Failed to delete account");
+        }
     }
 }
