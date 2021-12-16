@@ -1,8 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Member } from 'src/app/_models/member';
 import { MembersService } from 'src/app/_services/members.service';
 import { PresenceService } from 'src/app/_services/presence.service';
+import { faHeart, faHeartBroken } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-member-card',
@@ -11,6 +12,9 @@ import { PresenceService } from 'src/app/_services/presence.service';
 })
 export class MemberCardComponent implements OnInit {
   @Input() member: Member;
+  @Output("loadLikes") loadLikes: EventEmitter<any> = new EventEmitter();
+  faHeart = faHeart;
+  faHeartBroken = faHeartBroken;
 
   constructor(private memberService: MembersService,
     private toastr: ToastrService,
@@ -21,13 +25,15 @@ export class MemberCardComponent implements OnInit {
 
   addLike(member: Member){
     this.memberService.addLike(member.username).subscribe(() => {
-      this.toastr.success('You have liked ' + member.knownAs);
+      this.loadLikes.emit();
+      this.toastr.success('You liked ' + member.knownAs);
     })
   }
 
   removeLike(member: Member){
     this.memberService.removeLike(member.username).subscribe(() => {
-      this.toastr.error('You have unliked ' + member.knownAs);
+      this.loadLikes.emit();
+      this.toastr.warning('You unliked ' + member.knownAs);
     })
   }
 }

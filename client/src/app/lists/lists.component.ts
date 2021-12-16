@@ -25,6 +25,12 @@ export class ListsComponent implements OnInit {
     this.memberService.getLikes(this.predicate, this.pageNumber, this.pageSize).subscribe(response => {
       this.members = response.result;
       this.pagination = response.pagination;
+      if(this.predicate === 'mutual' || this.predicate === 'liked')
+      {
+        this.members.forEach(m => {
+          m.likedByCurrentUser = true;
+        })
+      }
     })
   }
 

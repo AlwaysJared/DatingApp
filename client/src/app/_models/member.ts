@@ -16,4 +16,5 @@ export interface Member {
     city: string;
     country: string;
     photos: Photo[];
+    likedByCurrentUser: boolean;
 }
