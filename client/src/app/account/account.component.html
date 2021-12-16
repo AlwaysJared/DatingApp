@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="col-12">
+    <tabset class="member-tabset" #memberTabs>
+      <tab
+        heading="Account"
+        (selectTab)="onTabActivated($event)"
+      >
+      <button
+        (click)="deleteMember(member)"
+        class="btn btn-sm btn-danger flex-grow-1"
+      >
+        Delete Account
+      </button>
+      </tab>
+      <tab heading="Security" (selectTab)="onTabActivated($event)">
+        
+      </tab>
+    </tabset>
+  </div>
+</div>
