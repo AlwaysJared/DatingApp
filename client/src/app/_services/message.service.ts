@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
+import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -20,7 +21,9 @@ export class MessageService {
   private messageThreadSource = new BehaviorSubject<Message[]>([]);
   messageThread$ = this.messageThreadSource.asObservable();
 
-  constructor(private http: HttpClient, private busyService: BusyService) {}
+  constructor(private http: HttpClient, 
+    private busyService: BusyService,
+    private toastr: ToastrService) {}
 
   createHubConnection(user: User, otherUsername: string) {
     this.busyService.busy();
@@ -85,7 +88,10 @@ export class MessageService {
   async sendMessage(username: string, content: string) {
     return this.hubConnection
       .invoke('SendMessage', { recipientUsername: username, content })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        var errMsg = error.message.split(':')[1];
+        this.toastr.error(errMsg);
+      });
   }
 
   deleteNessage(id: number) {
