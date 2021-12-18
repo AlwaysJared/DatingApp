@@ -34,6 +34,7 @@ import { PhotoManagmentComponent } from './admin/photo-managment/photo-managment
 import { RolesModalComponent } from './modals/roles-modal/roles-modal.component';
 import { ConfirmDialogComponent } from './modals/confirm-dialog/confirm-dialog.component';
 import { AccountComponent } from './account/account.component';
+import { EmailInputComponent } from './_forms/email-input/email-input.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { AccountComponent } from './account/account.component';
     RolesModalComponent,
     ConfirmDialogComponent,
     AccountComponent,
+    EmailInputComponent,
   ],
   imports: [
     BrowserModule,

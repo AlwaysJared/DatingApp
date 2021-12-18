@@ -46,6 +46,8 @@ namespace API.Data
                 UserName = "admin"
             };
 
+            admin.Email = "l62nhxdaxclitnjs@ethereal.email";
+
             await userManager.CreateAsync(admin, "Pa$$w0rd");
             await userManager.AddToRolesAsync(admin, new[] {"Admin", "Moderator"});
         }

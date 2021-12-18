@@ -25,10 +25,10 @@
     [formControl]="registerForm.controls['knownAs']"
     [label]="'Known As'"
   ></app-text-input>
-  <!-- <app-text-input
-    [formControl]="registerForm.controls['dateOfBirth']"
-    [label]="'Date Of Birth'"
-  ></app-text-input> -->
+  <app-email-input
+    [formControl]="registerForm.controls['email']"
+    [label]="'Email'"
+  ></app-email-input>
   <app-date-input
     [formControl]="registerForm.controls['dateOfBirth']"
     [label]="'Date Of Birth'"

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, take } from 'rxjs';
@@ -26,9 +26,10 @@ export class NavComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  login() {
+  login(form: NgForm) {
     this.accountService.login(this.model).subscribe(response => {
       this.router.navigateByUrl('/members');
+      form.resetForm();
     })
   }
 

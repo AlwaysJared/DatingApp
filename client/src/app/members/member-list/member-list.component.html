@@ -1,4 +1,4 @@
-<div class="text-center mt-3">
+<div class="text-center mt-5">
   <h2>Your matches - {{ pagination?.totalItems }} found</h2>
 </div>
 
@@ -13,8 +13,10 @@
       <label class="col-form-label me-2">Age from: </label>
       <input
         type="number"
+        min="18"
+        max="9999"
         class="form-control ms-1"
-        style="width: 70px"
+        style="width: 90px"
         name="minAge"
         [(ngModel)]="userParams.minAge"
       />
@@ -24,8 +26,10 @@
       <label class="col-form-label me-2">Age to: </label>
       <input
         type="number"
+        min="18"
+        max="9999"
         class="form-control ms-1"
-        style="width: 70px"
+        style="width: 90px"
         name="maxAge"
         [(ngModel)]="userParams.maxAge"
       />

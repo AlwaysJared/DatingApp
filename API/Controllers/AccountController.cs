@@ -37,6 +37,11 @@ namespace API.Controllers
                 return BadRequest("Username is taken");
             }
 
+            if(await _userManager.FindByEmailAsync(resgisterDto.Email) != null)
+            {
+                return BadRequest("Email already associated with another account");
+            }
+
             var user = __mapper.Map<AppUser>(resgisterDto);
 
             user.UserName = resgisterDto.Username.ToLower();
