@@ -1,16 +1,15 @@
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
   <div class="container">
-
     <!-- crude ternarry Logo route, changes depending on if there is a currently logged in user. 
       Prevents the user from landning back on the regitster call to action page-->
     <ng-container *ngIf="!(accountService.currentUser$ | async)">
       <a class="navbar-brand" routerLink="/">Dating App</a>
     </ng-container>
-    <ng-container *ngIf="(accountService.currentUser$ | async)">
+    <ng-container *ngIf="accountService.currentUser$ | async">
       <a class="navbar-brand" routerLink="/members">Dating App</a>
     </ng-container>
 
-    <ul class="navbar-nav me-auto" >
+    <ul class="navbar-nav float-end">
       <ng-container *ngIf="accountService.currentUser$ | async">
         <li class="nav-item">
           <a
@@ -18,40 +17,67 @@
             aria-current="page"
             routerLink="/members"
             routerLinkActive="active"
-            >Matches</a
-          >
+            ><fa-icon
+              [icon]="faUsers"
+              transform="grow-4"
+              title="Users"
+            ></fa-icon
+          ></a>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/lists" routerLinkActive="active"
-            >Lists</a
-          >
+            ><fa-icon
+              [icon]="faHeart"
+              transform="grow-4"
+              title="Likes"
+            ></fa-icon
+          ></a>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/messages" routerLinkActive="active"
-            >Messages</a
-          >
+            ><fa-icon
+              [icon]="faComments"
+              transform="grow-4"
+              title="Messages"
+            ></fa-icon
+          ></a>
         </li>
-        <li *appHasRole='["Admin", "Moderator"]' class="nav-item">
+        <li *appHasRole="['Admin', 'Moderator']" class="nav-item">
           <a class="nav-link" routerLink="/admin" routerLinkActive="active"
-            >Admin</a
-          >
+            >
+            <!-- need a way to async check for user role in order to properly title admin icon -->
+            <fa-icon
+              [icon]="faUserCog"
+              transform="grow-4"
+              title="Admin"
+            ></fa-icon
+          ></a>
         </li>
+
+        <!-- idea for routerlink to current user profile in nav picture -->
+        <!-- routerLink='/members/{{user.username}}' -->
+        <div
+          class="dropdown"
+          *ngIf="accountService.currentUser$ | async as user"
+          dropdown
+        >
+          <!-- <a class="dropdown-toggle text-light me-2 text-decoration-none" dropdownToggle>Welcome {{user.knownAs || user.username | titlecase}}</a> -->
+          <img
+            class="rounded-circle dropdown-toggle"
+            src="{{ user.photoUrl || './assets/user.png' }}"
+            alt="{{ user.username }}"
+            dropdownToggle
+          />
+          <div class="dropdown-menu mt-2" *dropdownMenu>
+            <a routerLink="/member/edit" class="dropdown-item">Edit Profile</a>
+            <div class="dropdown-divider"></div>
+            <a routerLink="/account" class="dropdown-item">Settings</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" (click)="logout()" href="#">Logout</a>
+          </div>
+        </div>
       </ng-container>
     </ul>
-
-    <!-- idea for routerlink to current user profile in nav picture -->
-    <!-- routerLink='/members/{{user.username}}' -->
-    <div class="dropdown" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
-      <!-- <a class="dropdown-toggle text-light me-2 text-decoration-none" dropdownToggle>Welcome {{user.knownAs || user.username | titlecase}}</a> -->
-      <img class="rounded-circle dropdown-toggle" src="{{user.photoUrl || './assets/user.png'}}" alt="{{user.username}}" dropdownToggle>
-      <div class="dropdown-menu mt-2" *dropdownMenu>
-        <a routerLink='/member/edit' class="dropdown-item">Edit Profile</a>
-        <div class="dropdown-divider"></div>
-        <a routerLink='/account' class="dropdown-item">Settings</a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" (click)="logout()" href="#">Logout</a>
-      </div>
-    </div>
 
     <form
       *ngIf="!(accountService.currentUser$ | async)"
@@ -74,7 +100,13 @@
         type="password"
         placeholder="Password"
       />
-      <button [disabled]='!model.username?.length || !model.password?.length' class="btn btn-success my-2 my-sm-0" type="submit">Login</button>
+      <button
+        [disabled]="!model.username?.length || !model.password?.length"
+        class="btn btn-success my-2 my-sm-0"
+        type="submit"
+      >
+        Login
+      </button>
     </form>
   </div>
 </nav>
