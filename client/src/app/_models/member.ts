@@ -4,6 +4,7 @@ import { Photo } from "./photo";
 export interface Member {
     id: number;
     username: string;
+    email: string;
     photoUrl: string;
     age: number;
     knownAs: string;

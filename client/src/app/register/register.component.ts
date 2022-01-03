@@ -69,10 +69,19 @@ export class RegisterComponent implements OnInit {
 
   register() {
     this.accountService.register(this.registerForm.value).subscribe(response => {
+      this.sendConfirmation({ToEmail: this.registerForm.controls['email'].value, ClientURI: location.origin + '/confirm-email'});
       this.router.navigateByUrl('/members');
     }, error => {
       this.validationErrors = error;
     })
+  }
+
+  sendConfirmation(model: any){
+    this.accountService.sendConfirmation(model).subscribe(respnse => {
+      this.toastr.success('Confirmation email sent!');
+    }, error => {
+      this.toastr.error(error);
+    });
   }
 
   cancel() {

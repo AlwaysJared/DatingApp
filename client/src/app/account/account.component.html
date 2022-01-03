@@ -1,20 +1,24 @@
-<div class="row">
-  <div class="col-12">
-    <tabset class="member-tabset" #memberTabs>
-      <tab
-        heading="Account"
-        (selectTab)="onTabActivated($event)"
-      >
-      <button
-        (click)="deleteMember(member)"
-        class="btn btn-sm btn-danger flex-grow-1"
-      >
-        Delete Account
-      </button>
-      </tab>
-      <tab heading="Security" (selectTab)="onTabActivated($event)">
-        
-      </tab>
+<div class="row mt-2">
+  <div class="col-2 acct-tabs">
+    <tabset class="member-tabset" #memberTabs vertical="true" type="pills">
+      <tab heading="Account" (selectTab)="onTabActivated($event)"></tab>
+      <tab heading="Security" (selectTab)="onTabActivated($event)"></tab>
     </tabset>
+  </div>
+
+  <div class="col-10">
+    <ng-container *ngIf="activeTab?.heading === 'Account' || !activeTab">
+      <div class="acct-content">
+        <button
+          (click)="deleteMember(member)"
+          class="btn btn-sm btn-danger flex-grow-1 float-end"
+        >
+          Delete Account
+        </button>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="activeTab?.heading === 'Security'">
+      <div class="acct-content">Security works!</div>
+    </ng-container>
   </div>
 </div>

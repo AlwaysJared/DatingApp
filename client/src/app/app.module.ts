@@ -35,6 +35,7 @@ import { RolesModalComponent } from './modals/roles-modal/roles-modal.component'
 import { ConfirmDialogComponent } from './modals/confirm-dialog/confirm-dialog.component';
 import { AccountComponent } from './account/account.component';
 import { EmailInputComponent } from './_forms/email-input/email-input.component';
+import { EmailConfirmationComponent } from './email-confirmation/email-confirmation.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { EmailInputComponent } from './_forms/email-input/email-input.component'
     ConfirmDialogComponent,
     AccountComponent,
     EmailInputComponent,
+    EmailConfirmationComponent,
   ],
   imports: [
     BrowserModule,

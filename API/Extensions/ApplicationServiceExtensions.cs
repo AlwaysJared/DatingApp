@@ -16,8 +16,10 @@ namespace API.Extensions
         {
             services.AddSingleton<PresenceTracker>();
             services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
+            services.Configure<EmailSettings>(config.GetSection("EmailSettings"));
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IPhotoService, PhotoService>();
+            services.AddTransient<IEmailService, EmailService>();
             services.AddScoped<LogUserActivity>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);

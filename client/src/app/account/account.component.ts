@@ -40,6 +40,8 @@ export class AccountComponent implements OnInit {
     this.route.data.subscribe((data) => {
       this.member = data.member;
     });
+    // console.log(this.member);
+    // this.loadMember();
 
     // this.route.queryParams.subscribe(params => {
     //   params.tab ? this.selectTab(params.tab) : this.selectTab(0)

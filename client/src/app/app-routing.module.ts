@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AccountComponent } from './account/account.component';
+import { EmailConfirmationComponent } from './email-confirmation/email-confirmation.component';
 import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
@@ -19,6 +20,7 @@ import { MemberDetailedResolver } from './_resolvers/member-detailed.resolver';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
+  { path: 'confirm-email', component: EmailConfirmationComponent},
   {
     path: '',
     runGuardsAndResolvers: 'always',

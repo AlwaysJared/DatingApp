@@ -20,6 +20,8 @@ export class ErrorInterceptor implements HttpInterceptor {
       catchError(error => {
         if (error){
           switch (error.status) {
+            case 200:
+              break;
             case 400:
               if(error.error.errors) {
                 const modalStateErrors = [];
@@ -46,7 +48,19 @@ export class ErrorInterceptor implements HttpInterceptor {
               this.router.navigateByUrl('/server-error', navigationExtras);
               break;
             default:
-              this.toastr.error('Something unexpected happened');
+              if(error.error.errors) {
+                const modalStateErrors = [];
+                for (const key in error.error.errors){
+                  if(error.error.errors[key]){
+                    modalStateErrors.push(error.error.errors[key]);
+                  }
+                }
+                throw modalStateErrors.flat();
+              } else if (typeof(error.error) === 'object'){
+                this.toastr.error(error.error.title, error.status);
+              } else {
+                this.toastr.error(error.error, error.status)
+              }
               console.log(error);
               break;
           }

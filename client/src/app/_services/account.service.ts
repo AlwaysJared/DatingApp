@@ -39,6 +39,17 @@ export class AccountService {
     );
   }
 
+  sendConfirmation(model: any) {
+    // console.log("made it to send confirmation");
+    // console.log(model);
+    // console.log(this.baseUrl + 'email/send-confirmation');
+    return this.http.post(this.baseUrl + 'email/send-confirmation', {ToEmail: model.ToEmail, ClientURI: model.ClientURI});
+  }
+
+  confirmEmail(model: any){
+    return this.http.get(this.baseUrl + 'account/confirm-email', {params: {email: model.email, token: model.token}});
+  }
+
   setCurrentUser(user: User) {
     user.roles = [];
     const roles = this.getDecodedToken(user.token).role;

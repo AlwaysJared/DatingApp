@@ -9,6 +9,7 @@ using API.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
@@ -37,7 +38,7 @@ namespace API.Controllers
                 return BadRequest("Username is taken");
             }
 
-            if(await _userManager.FindByEmailAsync(resgisterDto.Email) != null)
+            if (await _userManager.FindByEmailAsync(resgisterDto.Email) != null)
             {
                 return BadRequest("Email already associated with another account");
             }
@@ -48,12 +49,12 @@ namespace API.Controllers
 
             var result = await _userManager.CreateAsync(user, resgisterDto.Password);
 
-            if(!result.Succeeded)
+            if (!result.Succeeded)
                 return BadRequest(result.Errors);
 
             var roleResult = await _userManager.AddToRoleAsync(user, "Member");
 
-            if(!roleResult.Succeeded)
+            if (!roleResult.Succeeded)
                 return BadRequest(roleResult.Errors);
 
             return new UserDto
@@ -63,6 +64,28 @@ namespace API.Controllers
                 KnownAs = user.KnownAs,
                 Gender = user.Gender
             };
+        }
+
+        [HttpGet("confirm-email")]
+        public async Task<ActionResult> EmailConfirmation([FromQuery] string email, [FromQuery] string token)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if (user == null)
+                return NotFound("No user found for " + email);
+
+            if (user.EmailConfirmed == true)
+                return BadRequest(email + " is already confirmed");
+
+            var tokenDecodedBytes = WebEncoders.Base64UrlDecode(token);
+            var tokenDecoded = Encoding.UTF8.GetString(tokenDecodedBytes);
+
+            var confirmResult = await _userManager.ConfirmEmailAsync(user, tokenDecoded);
+
+            if (!confirmResult.Succeeded)
+                return BadRequest(confirmResult.Errors);
+
+            return Ok();
         }
 
         [HttpPost("login")]
@@ -77,7 +100,7 @@ namespace API.Controllers
             var result = await _signInManager
                 .CheckPasswordSignInAsync(user, loginDto.Password, false);
 
-            if(!result.Succeeded)
+            if (!result.Succeeded)
                 return Unauthorized();
 
             return new UserDto
