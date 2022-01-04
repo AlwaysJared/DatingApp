@@ -62,7 +62,34 @@ namespace API.Controllers
                 Username = user.UserName,
                 Token = await _tokenService.CreateToken(user),
                 KnownAs = user.KnownAs,
-                Gender = user.Gender
+                Gender = user.Gender,
+                EmailConfirmed = user.EmailConfirmed
+            };
+        }
+
+        [HttpPost("login")]
+        public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
+        {
+            var user = await _userManager.Users
+                .Include(p => p.Photos)
+                .SingleOrDefaultAsync(x => x.UserName == loginDto.Username.ToLower());
+            if (user == null)
+                return Unauthorized("Invalid Username");
+
+            var result = await _signInManager
+                .CheckPasswordSignInAsync(user, loginDto.Password, false);
+
+            if (!result.Succeeded)
+                return Unauthorized();
+
+            return new UserDto
+            {
+                Username = user.UserName,
+                Token = await _tokenService.CreateToken(user),
+                PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain)?.Url,
+                KnownAs = user.KnownAs,
+                Gender = user.Gender,
+                EmailConfirmed = user.EmailConfirmed
             };
         }
 
@@ -88,29 +115,26 @@ namespace API.Controllers
             return Ok();
         }
 
-        [HttpPost("login")]
-        public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
+        [HttpPost("reset-password")]
+        public async Task<ActionResult> ResetPassword(ResetPasswordDto resetPasswordDto)
         {
-            var user = await _userManager.Users
-                .Include(p => p.Photos)
-                .SingleOrDefaultAsync(x => x.UserName == loginDto.Username.ToLower());
+            var user = await _userManager.FindByEmailAsync(resetPasswordDto.Email);
+
             if (user == null)
-                return Unauthorized("Invalid Username");
+                return NotFound("No user found for " + resetPasswordDto.Email);
 
-            var result = await _signInManager
-                .CheckPasswordSignInAsync(user, loginDto.Password, false);
+            // if (user.EmailConfirmed == true)
+            //     return BadRequest(email + " is already confirmed");
 
-            if (!result.Succeeded)
-                return Unauthorized();
+            var tokenDecodedBytes = WebEncoders.Base64UrlDecode(resetPasswordDto.Token);
+            var tokenDecoded = Encoding.UTF8.GetString(tokenDecodedBytes);
 
-            return new UserDto
-            {
-                Username = user.UserName,
-                Token = await _tokenService.CreateToken(user),
-                PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain)?.Url,
-                KnownAs = user.KnownAs,
-                Gender = user.Gender
-            };
+            var confirmResult = await _userManager.ResetPasswordAsync(user, tokenDecoded, resetPasswordDto.NewPassword);
+
+            if (!confirmResult.Succeeded)
+                return BadRequest(confirmResult.Errors);
+
+            return Ok();
         }
 
         private async Task<bool> UserExists(string username)

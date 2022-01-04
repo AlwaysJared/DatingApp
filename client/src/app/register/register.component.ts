@@ -39,15 +39,19 @@ export class RegisterComponent implements OnInit {
     this.registerForm = this.fb.group({
       gender: ['male'],
       username: ['', Validators.required],
-      email: ['', Validators.required],
+      email: ['', [
+        Validators.required,
+        Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$'),
+      ]],
       knownAs: ['', Validators.required],
       dateOfBirth: ['', Validators.required],
       city: ['', Validators.required],
       country: ['', Validators.required],
       password: ['', [
         Validators.required,
-        Validators.minLength(4),
-        Validators.maxLength(8),
+        Validators.minLength(8),
+        Validators.maxLength(20),
+        Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,20}'),
       ]],
       confirmPassword: ['', [
         Validators.required,

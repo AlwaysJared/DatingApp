@@ -42,12 +42,23 @@ export class AccountService {
   sendConfirmation(model: any) {
     // console.log("made it to send confirmation");
     // console.log(model);
-    // console.log(this.baseUrl + 'email/send-confirmation');
-    return this.http.post(this.baseUrl + 'email/send-confirmation', {ToEmail: model.ToEmail, ClientURI: model.ClientURI});
+    // console.log(this.baseUrl + 'email/send-email-confirmation');
+    return this.http.post(this.baseUrl + 'email/send-email-confirmation', {ToEmail: model.ToEmail, ClientURI: model.ClientURI});
+  }
+
+  sendReset(model: any) {
+    // console.log("made it to send reset");
+    // console.log(model);
+    // console.log(this.baseUrl + 'email/send-password-reset');
+    return this.http.post(this.baseUrl + 'email/send-password-reset', {ToEmail: model.ToEmail, ClientURI: model.ClientURI});
   }
 
   confirmEmail(model: any){
     return this.http.get(this.baseUrl + 'account/confirm-email', {params: {email: model.email, token: model.token}});
+  }
+
+  resetPassword(model: any){
+    return this.http.post(this.baseUrl + 'account/reset-password', {Email: model.email, Token: model.token, NewPassword: model.newPassword});
   }
 
   setCurrentUser(user: User) {

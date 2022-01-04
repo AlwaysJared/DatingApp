@@ -9,5 +9,8 @@
     <div *ngIf="ngControl.control.errors?.required" class="invalid-feedback">
       Please enter an {{ label }}
     </div>
+    <div *ngIf="ngControl.control.errors?.pattern" class="invalid-feedback">
+      Please enter a valid {{ label }}
+    </div>
   </div>
   

@@ -1,1 +1,13 @@
-<p>email-confirmation works!</p>
+<div class="container">
+    <h2 class="text-center mb-5">Thank you for confirming your email! Feel free to interact with other users!</h2>
+  <ng-container *ngIf="!(accountService.currentUser$ | async)">
+      <div class="text-center">
+        <a routerLink="/"><button class="btn btn-lg btn-primary">Return Home</button></a>
+      </div>
+  </ng-container>
+  <ng-container *ngIf="accountService.currentUser$ | async">
+      <div class="text-center">
+        <a routerLink="/members"><button class="btn btn-lg btn-primary">Return Home</button></a>
+      </div>
+  </ng-container>
+</div>

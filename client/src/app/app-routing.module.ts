@@ -17,10 +17,14 @@ import { AuthGuard } from './_guards/auth.guard';
 import { PreventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.guard';
 import { MemberAccountResolver } from './_resolvers/member-account.resolver';
 import { MemberDetailedResolver } from './_resolvers/member-detailed.resolver';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'confirm-email', component: EmailConfirmationComponent},
+  { path: 'forgot-password', component: ForgotPasswordComponent},
+  { path: 'reset-password', component: ResetPasswordComponent},
   {
     path: '',
     runGuardsAndResolvers: 'always',

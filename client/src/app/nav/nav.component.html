@@ -71,7 +71,7 @@
           <div class="dropdown-menu mt-4" *dropdownMenu>
             <a routerLink="/member/edit" class="dropdown-item">Edit Profile</a>
             <div class="dropdown-divider"></div>
-            <a routerLink="/account" class="dropdown-item">Settings</a>
+            <a routerLink="/account" class="dropdown-item">Account</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" (click)="logout()" href="#">Logout</a>
           </div>
@@ -85,6 +85,7 @@
       class="d-flex"
       (ngSubmit)="login(loginForm)"
       autocomplete="off"
+      style="max-width: 550px;"
     >
       <input
         name="username"
@@ -102,11 +103,12 @@
       />
       <button
         [disabled]="!model.username?.length || !model.password?.length"
-        class="btn btn-success my-2 my-sm-0"
+        class="btn btn-success  me-2"
         type="submit"
       >
         Login
       </button>
+      <a class="mt-3 text-center" style="color: white; font-size: 8px;" routerLink="/forgot-password">Forgot password?</a>
     </form>
   </div>
 </nav>

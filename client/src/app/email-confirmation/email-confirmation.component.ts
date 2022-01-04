@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { take } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { User } from '../_models/user';
 import { AccountService } from '../_services/account.service';
 
 @Component({
@@ -13,10 +15,16 @@ export class EmailConfirmationComponent implements OnInit {
   baseUrl = environment.apiUrl;
   email: string;
   token: string;
+  user: User;
 
   constructor(private route: ActivatedRoute,
-    private accountService: AccountService,
-    private toastr: ToastrService) { }
+    public accountService: AccountService,
+    private toastr: ToastrService)
+  {
+    this.accountService.currentUser$.pipe(take(1)).subscribe((user) => {
+      this.user = user;
+    });
+  }
 
   ngOnInit(): void {
     this.email = this.route.snapshot.queryParamMap.get('email');

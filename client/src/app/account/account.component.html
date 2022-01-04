@@ -8,17 +8,42 @@
 
   <div class="col-10">
     <ng-container *ngIf="activeTab?.heading === 'Account' || !activeTab">
-      <div class="acct-content">
-        <button
-          (click)="deleteMember(member)"
-          class="btn btn-sm btn-danger flex-grow-1 float-end"
-        >
-          Delete Account
-        </button>
-      </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th><h4>Account Settings</h4></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <h5>Account Info</h5>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <h5>Email Confirmation</h5>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <!-- <div class="acct-content"></div> -->
+              <h5>Delete Account</h5>
+              Sorry to see you go! This will remove your account and all
+              associated data.
+              <button
+                (click)="deleteMember(member)"
+                class="btn btn-sm btn-danger flex-grow-1 float-end del-acct-btn"
+              >
+                Delete Account
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </ng-container>
     <ng-container *ngIf="activeTab?.heading === 'Security'">
-      <div class="acct-content">Security works!</div>
+      <!-- <div class="acct-content">Security works!</div> -->
     </ng-container>
   </div>
 </div>
