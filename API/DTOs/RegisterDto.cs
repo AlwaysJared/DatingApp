@@ -7,6 +7,7 @@ namespace API.DTOs
     {
         [Required] public string Username { get; set; }
         [Required] public string Email { get; set; }
+        public string PhoneNumber { get; set; }
         [Required] public string KnownAs { get; set; }
         [Required] public string Gender { get; set; }
         [Required] public DateTime DateOfBirth { get; set; }
@@ -14,7 +15,7 @@ namespace API.DTOs
         [Required] public string Country { get; set; }
         
         [Required]
-        [StringLength(8, MinimumLength = 4)] 
+        [StringLength(20, MinimumLength = 8)] 
         public string Password { get; set; }
     }
 }

@@ -29,6 +29,10 @@
     [formControl]="registerForm.controls['email']"
     [label]="'Email'"
   ></app-email-input>
+  <app-phone-input
+    [formControl]="registerForm.controls['phoneNumber']"
+    [label]="'Phone (optional)'"
+  ></app-phone-input>
   <app-date-input
     [formControl]="registerForm.controls['dateOfBirth']"
     [label]="'Date Of Birth'"

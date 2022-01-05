@@ -6,3 +6,9 @@
 .del-acct-btn{
     margin-top: -1em;
 }
+
+img {
+    max-height:  150px !important;
+    border: 2px solid #fff;
+    display: inline;
+}

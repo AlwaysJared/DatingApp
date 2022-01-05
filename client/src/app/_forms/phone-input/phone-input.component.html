@@ -1,0 +1,12 @@
+<div class="mb-3">
+    <input
+      [class.is-invalid]="ngControl.touched && ngControl.invalid"
+      type="{{ type }}"
+      class="form-control"
+      [formControl]="ngControl.control"
+      placeholder="{{ label }}"
+    />
+    <div *ngIf="ngControl.control.errors?.pattern" class="invalid-feedback">
+      Please enter a valid U.S. phone number
+    </div>
+</div>

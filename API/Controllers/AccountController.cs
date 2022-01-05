@@ -63,7 +63,10 @@ namespace API.Controllers
                 Token = await _tokenService.CreateToken(user),
                 KnownAs = user.KnownAs,
                 Gender = user.Gender,
-                EmailConfirmed = user.EmailConfirmed
+                Email = user.Email,
+                EmailConfirmed = user.EmailConfirmed,
+                PhoneNumber = user.PhoneNumber,
+                PhoneNumberConfirmed = user.PhoneNumberConfirmed
             };
         }
 
@@ -74,13 +77,13 @@ namespace API.Controllers
                 .Include(p => p.Photos)
                 .SingleOrDefaultAsync(x => x.UserName == loginDto.Username.ToLower());
             if (user == null)
-                return Unauthorized("Invalid Username");
+                return Unauthorized("Invalid Username or password");
 
             var result = await _signInManager
                 .CheckPasswordSignInAsync(user, loginDto.Password, false);
 
             if (!result.Succeeded)
-                return Unauthorized();
+                return Unauthorized("Invalid Username or password");
 
             return new UserDto
             {
@@ -89,7 +92,10 @@ namespace API.Controllers
                 PhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain)?.Url,
                 KnownAs = user.KnownAs,
                 Gender = user.Gender,
-                EmailConfirmed = user.EmailConfirmed
+                Email = user.Email,
+                EmailConfirmed = user.EmailConfirmed,
+                PhoneNumber = user.PhoneNumber,
+                PhoneNumberConfirmed = user.PhoneNumberConfirmed
             };
         }
 

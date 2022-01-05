@@ -11,26 +11,56 @@
       <table class="table">
         <thead>
           <tr>
-            <th><h4>Account Settings</h4></th>
+            <th><h4 class="float-end">Account Settings</h4></th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>
               <h5>Account Info</h5>
+              <div class="float-start mt-5">
+                <h6> Username: <span class="text-muted">{{ user.username }}</span></h6>
+                <h6>Email: <span class="text-muted">{{ user.email }}</span></h6>
+                <h6>Phone: <span class="text-muted">{{ user.phoneNumber }}</span></h6>
+              </div>
+              <img
+                class="rounded-circle float-end"
+                src="{{ user.photoUrl || './assets/user.png' }}"
+                alt="{{ user.username }}"
+              />
             </td>
           </tr>
           <tr>
             <td>
               <h5>Email Confirmation</h5>
+              <ng-container *ngIf="user.emailConfirmed">
+                <span class="text-muted">
+                  Your email is already confirmed!
+                </span>
+              </ng-container>
+              <ng-container *ngIf="!user.emailConfirmed">
+                <span class="text-muted">
+                  Click to send a confirmation link to your account's associated
+                  email
+                </span>
+              </ng-container>
+              <button
+                [disabled]="user.emailConfirmed"
+                (click)="sendConfirmation()"
+                class="btn btn-sm btn-success flex-grow-1 float-end del-acct-btn"
+              >
+                Send
+              </button>
             </td>
           </tr>
           <tr>
             <td>
               <!-- <div class="acct-content"></div> -->
               <h5>Delete Account</h5>
-              Sorry to see you go! This will remove your account and all
-              associated data.
+              <span class="text-muted">
+                Sorry to see you go! This will remove your account and all
+                associated data.
+              </span>
               <button
                 (click)="deleteMember(member)"
                 class="btn btn-sm btn-danger flex-grow-1 float-end del-acct-btn"
@@ -43,7 +73,42 @@
       </table>
     </ng-container>
     <ng-container *ngIf="activeTab?.heading === 'Security'">
-      <!-- <div class="acct-content">Security works!</div> -->
+      <table class="table">
+        <thead>
+          <tr>
+            <th><h4 class="float-end">Security Settings</h4></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <h5 class="mb-3">2-Factor Authentication</h5>
+              <div class="mb-4">
+                <ui-switch [checked]="enable"></ui-switch>
+                <h6 class="ms-2 text-muted" style="display: inline;">Enable</h6>
+              </div>
+              <ng-container *ngIf="user.phoneNumberConfirmed">
+                <span class="text-muted">
+                  Your phone number is already confirmed!
+                </span>
+              </ng-container>
+              <ng-container *ngIf="!user.phoneNumberConfirmed">
+                <span class="text-muted">
+                  Click to send a 2F auth code to your account's associated
+                  phone number
+                </span>
+              </ng-container>
+              <!-- <button
+                [disabled]="user.phoneNumberConfirmed"
+                (click)="sendConfirmation()"
+                class="btn btn-sm btn-success flex-grow-1 float-end del-acct-btn"
+              >
+                Send
+              </button> -->
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </ng-container>
   </div>
 </div>

@@ -20,6 +20,10 @@ export class AccountComponent implements OnInit {
   member: Member;
   activeTab: TabDirective;
   user: User;
+  enable = false;
+  change = false;
+  valueChange = false;
+  changeEvent: MouseEvent;
 
   constructor(
     public presence: PresenceService,
@@ -62,6 +66,14 @@ export class AccountComponent implements OnInit {
     });
   }
 
+  sendConfirmation(){
+    this.accountService.sendConfirmation({ToEmail: this.user.email, ClientURI: location.origin + '/confirm-email'}).subscribe(respnse => {
+      this.toastr.success('Confirmation email sent!');
+    }, error => {
+      this.toastr.error(error);
+    });
+  }
+
   deleteMember(member: Member) {
     this.confirmService
       .confirm(
@@ -77,5 +89,18 @@ export class AccountComponent implements OnInit {
           this.router.navigateByUrl('/');
         }
       });
+  }
+
+  onChange(value: boolean) {
+    this.change = value;
+  }
+
+  onChangeEvent(event: MouseEvent) {
+    console.log(event, event.toString(), JSON.stringify(event));
+    this.changeEvent = event;
+  }
+
+  onValueChange(value: boolean) {
+    this.valueChange = value;
   }
 }

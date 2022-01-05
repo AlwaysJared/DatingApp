@@ -10,6 +10,7 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { TimeagoModule } from 'ngx-timeago';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { UiSwitchModule } from "ngx-ui-switch";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
@@ -30,6 +31,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     ButtonsModule.forRoot(),
     TimeagoModule.forRoot(),
     ModalModule.forRoot(),
+    UiSwitchModule,
     FontAwesomeModule
   ],
   exports: [
@@ -43,6 +45,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     ButtonsModule,
     TimeagoModule,
     ModalModule,
+    UiSwitchModule,
     FontAwesomeModule
   ]
 })

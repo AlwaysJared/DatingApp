@@ -38,6 +38,7 @@ import { EmailInputComponent } from './_forms/email-input/email-input.component'
 import { EmailConfirmationComponent } from './email-confirmation/email-confirmation.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { PhoneInputComponent } from './_forms/phone-input/phone-input.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     EmailConfirmationComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
+    PhoneInputComponent,
   ],
   imports: [
     BrowserModule,
